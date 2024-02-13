@@ -52,3 +52,8 @@ The built-in terminal inside of Neovim is not fast enough to render the video pr
 to run the command will mess up your Nvim instance, forcing you to kill the entire terminal
 emulator and restart Nvim. Don't use it seriously. For this reason, the code is also unpolished,
 no edge cases are handled, etc...
+
+## Future Work
+
+Explore the Nvim/Tmux integration and try to figure out if there's a way to make this actually
+work.
