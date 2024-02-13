@@ -1,8 +1,22 @@
 ---@class CustomModule
 local M = {}
 
----@return string
-M.create_surfer = function(conf)
+M.get_path = function(conf)
+    return debug.getinfo(1).source:sub(2, -28) .. conf.path
+end
+
+M.create_tmux_split = function(conf) 
+
+    path = M.get_path(conf)
+
+    vim.fn.jobstart(
+        { "tmux", "split-window", "-h", "--", "CACA_DRIVER=ncurses mplayer -quiet -vo caca " .. path }
+    )
+
+    return ""
+end
+
+M.create_nvim_split = function(conf)
     vim.cmd('vsplit')
     conf.window = vim.api.nvim_get_current_win()
     conf.buffer = vim.api.nvim_create_buf(true, true)
@@ -10,19 +24,20 @@ M.create_surfer = function(conf)
 
     vim.o.wrap = false
 
-    path = debug.getinfo(1).source:sub(2, -28) .. conf.path
+    path = M.get_path(conf)
 
     conf.terminal = vim.fn.termopen(
         { "mplayer", "-vo", "caca", path },
         {
             env = { CACA_DRIVER='ncurses' },
             on_stdout = function(job_id, data, event) 
-                conf.callbacks = conf.callbacks + 1
-                vim.api.nvim_buf_set_lines(conf.buffer, 0, -1, false, { tostring(conf.callbacks) })
+                vim.api.nvim_buf_set_lines(conf.buffer, 0, -1, false, data)
                 vim.opt_local.modified = false
             end
         }
     )
+
+    return ""
 end
 
 return M

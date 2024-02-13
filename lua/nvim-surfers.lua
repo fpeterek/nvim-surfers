@@ -7,6 +7,7 @@ local config = {
     path = "resources/surfers.mp4",
     window = nil,
     buffer = nil,
+    use_tmux = false,
 }
 
 ---@class MyModule
@@ -23,7 +24,11 @@ M.setup = function(args)
 end
 
 M.surf = function()
-    return ns.create_surfer(M.config)
+    if M.config.use_tmux then
+        return ns.create_tmux_split(M.config)
+    else    
+        return ns.create_nvim_split(M.config)
+    end
 end
 
 return M
