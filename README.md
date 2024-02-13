@@ -24,8 +24,7 @@ Just install the plugin using your favorite package manager. No further setup ne
 ```lua
 local plugins = {
     {
-        'fpeterek/nvim-surfers',
-        dir = '/home/fpeterek/Documents/nvim-surfers'
+        'fpeterek/nvim-surfers'
     },
 }
 
