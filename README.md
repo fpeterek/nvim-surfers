@@ -91,3 +91,6 @@ nvim
 ```
 
 Then, just launch the playback using `:Surf`, just like you're used to.
+
+Just note that the command will create a new Tmux split and you will have to jump from the newly
+created Tmux split back into your Neovim split to use Nvim again.
